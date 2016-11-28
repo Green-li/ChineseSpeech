@@ -82,11 +82,11 @@ int readThePinyin(wstring pinyin) {
 
 	PlayParms.dwFrom = 0;																	//radio strat pos
 	error = mciSendCommand(OpenParms.wDeviceID, MCI_PLAY, MCI_WAIT, (DWORD)&PlayParms);		//play the radio
-	if (error == 0)
-		return 1;
-	else
+	if (error != 0)
 		return -1;
+	error = mciSendCommand(OpenParms.wDeviceID, MCI_CLOSE, NULL, NULL);
 
+	return 1;
 }
 
 void readWords(wstring words, const unordered_map<wchar_t, wstring>& HzPytable) {
